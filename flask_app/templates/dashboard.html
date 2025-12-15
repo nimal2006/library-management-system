@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block title %}Dashboard — EduLibrary{% endblock %}
+{% block content %}
+<section class="grid stats">
+  <article class="card glass stat-card animate-fade-in">
+    <h3>Total Books</h3>
+    <div class="stat big">{{ total }}</div>
+  </article>
+  <article class="card glass stat-card animate-fade-in delay-1">
+    <h3>Issued</h3>
+    <div class="stat big">{{ issued }}</div>
+  </article>
+  <article class="card glass stat-card animate-fade-in delay-2">
+    <h3>Available</h3>
+    <div class="stat big">{{ available }}</div>
+  </article>
+</section>
+<section class="card glass">
+  <div class="row between">
+    <h2 class="section-title">Quick Actions</h2>
+    <div><a class="btn" href="{{ url_for('books') }}">Manage Books</a></div>
+  </div>
+</section>
+{% endblock %}

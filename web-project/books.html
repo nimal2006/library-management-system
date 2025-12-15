@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Library — Books</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body class="page-books">
+    <!-- Animated background shapes -->
+    <div class="bg-shape bg-shape1"></div>
+    <div class="bg-shape bg-shape2"></div>
+    <div class="bg-shape bg-shape3"></div>
+
+    <header class="topbar glass">
+      <div class="brand-left">EduLibrary</div>
+      <div class="top-actions">
+        <button id="themeToggleTop" class="icon-btn" title="Toggle theme">
+          🌓
+        </button>
+        <a href="dashboard.html" class="btn-link">Dashboard</a>
+        <a href="index.html" id="logoutBtn2" class="btn-link">Logout</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card glass animate-fade-in">
+        <div class="row between">
+          <h2 class="section-title">
+            <span class="section-icon">📖</span> Books
+          </h2>
+          <button id="addBookBtn" class="btn btn-primary btn-animate">
+            ➕ Add Book
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table id="booksTable" class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Total</th>
+                <th>Available</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <div id="modal" class="modal" aria-hidden="true">
+      <div class="modal-content card glass">
+        <button class="modal-close" id="modalClose">✕</button>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer muted">EduLibrary — Frontend demo</footer>
+  </body>
+</html>

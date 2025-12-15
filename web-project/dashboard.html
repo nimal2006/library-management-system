@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Library — Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body class="page-dashboard">
+    <!-- Animated background shapes -->
+    <div class="bg-shape bg-shape1"></div>
+    <div class="bg-shape bg-shape2"></div>
+    <div class="bg-shape bg-shape3"></div>
+
+    <header class="topbar glass">
+      <div class="brand-left">EduLibrary</div>
+      <div class="top-actions">
+        <button id="themeToggle" class="icon-btn" title="Toggle theme">
+          🌓
+        </button>
+        <a href="index.html" id="logoutBtn" class="btn-link">Logout</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="grid stats">
+        <article class="card glass stat-card animate-fade-in">
+          <div class="stat-icon">📚</div>
+          <h3>Total Books</h3>
+          <div class="stat big" id="totalBooks">0</div>
+        </article>
+
+        <article class="card glass stat-card animate-fade-in delay-1">
+          <div class="stat-icon">📤</div>
+          <h3>Issued Books</h3>
+          <div class="stat big" id="issuedBooks">0</div>
+        </article>
+
+        <article class="card glass stat-card animate-fade-in delay-2">
+          <div class="stat-icon">✅</div>
+          <h3>Available</h3>
+          <div class="stat big" id="availableBooks">0</div>
+        </article>
+      </section>
+
+      <section class="card glass animate-fade-in delay-3">
+        <div class="row between">
+          <h2 class="section-title">Quick Actions</h2>
+          <div>
+            <a class="btn" href="books.html">Manage Books</a>
+          </div>
+        </div>
+
+        <p class="muted">
+          All data is stored locally in your browser (LocalStorage). Works
+          offline.
+        </p>
+      </section>
+    </main>
+    <footer class="site-footer muted">library management system</footer>
+  </body>
+</html>

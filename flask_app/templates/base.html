@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{% block title %}Library{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <style>
+      /* small inline helper for templates */
+      .container {
+        max-width: 900px;
+        margin: 22px auto;
+        padding: 0 16px;
+      }
+    </style>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <header class="topbar glass">
+      <div class="brand-left">EduLibrary</div>
+      <div class="top-actions">
+        {% if session.user %}
+        <span class="muted">{{ session.user }}</span>
+        <a class="btn-link" href="{{ url_for('books') }}">Books</a>
+        <a class="btn-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a class="btn-link" href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+      </div>
+    </header>
+    <main class="container">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="card glass error">{{ messages[0] }}</div>
+      {% endif %} {% endwith %} {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer muted">EduLibrary — Flask backend demo</footer>
+  </body>
+</html>

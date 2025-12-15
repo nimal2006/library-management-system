@@ -1,0 +1,83 @@
+/* Minimal stylesheet for Flask demo (re-uses the project's design language) */
+:root {
+  --bg: #f6f7fb;
+  --text: #0f1724;
+  --muted: #607088;
+  --accent: linear-gradient(135deg, #7b61ff, #2ad8d6);
+}
+[data-theme="dark"] {
+  --bg: #0b1020;
+  --text: #e6eef8;
+  --muted: #9fb0c8;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+.card {
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+}
+.glass {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+}
+.muted {
+  color: var(--muted);
+}
+.container {
+  max-width: 980px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+}
+.card-login {
+  max-width: 420px;
+  margin: 0 auto;
+}
+.stat.big {
+  font-size: 28px;
+  font-weight: 700;
+}
+.error {
+  background: #ffecec;
+  color: #7b1e1e;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 12px;
+  }
+}
