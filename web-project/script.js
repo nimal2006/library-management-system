@@ -242,7 +242,7 @@ function doLogin() {
     loginSuccess();
     return;
   }
-  
+
   // Check custom registered users
   const customUsers = loadCustomUsers();
   const account = customUsers[u];
@@ -295,13 +295,20 @@ function renderDashboard() {
 function updateUserRoleDisplay() {
   const roleEl = document.getElementById("userRole");
   const userEl = document.getElementById("userName");
+  const welcomeEl = document.getElementById("welcomeName");
+  const username = getUser() || "Guest";
+  const capitalizedName = username.charAt(0).toUpperCase() + username.slice(1);
+  
   if (roleEl) {
     const role = getRole();
     roleEl.textContent = role.charAt(0).toUpperCase() + role.slice(1);
     roleEl.className = "role-badge role-" + role;
   }
   if (userEl) {
-    userEl.textContent = getUser() || "Guest";
+    userEl.textContent = capitalizedName;
+  }
+  if (welcomeEl) {
+    welcomeEl.textContent = capitalizedName;
   }
 }
 

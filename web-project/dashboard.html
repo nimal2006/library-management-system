@@ -28,38 +28,96 @@
     </header>
 
     <main class="container">
+      <!-- Welcome Banner -->
+      <section class="welcome-banner glass animate-fade-in">
+        <div class="welcome-content">
+          <h1 class="welcome-title">
+            Welcome back, <span id="welcomeName">User</span>! 👋
+          </h1>
+          <p class="welcome-text">Here's your library overview for today</p>
+        </div>
+        <div class="welcome-illustration">📖✨</div>
+      </section>
+
+      <!-- Stats Grid -->
       <section class="grid stats">
-        <article class="card glass stat-card animate-fade-in">
-          <div class="stat-icon">📚</div>
-          <h3>Total Books</h3>
-          <div class="stat big" id="totalBooks">0</div>
+        <article class="card glass stat-card stat-blue animate-fade-in">
+          <div class="stat-bg-icon">📚</div>
+          <div class="stat-content">
+            <div class="stat-icon">📚</div>
+            <h3>Total Books</h3>
+            <div class="stat big" id="totalBooks">0</div>
+            <div class="stat-label">In Library</div>
+          </div>
         </article>
 
-        <article class="card glass stat-card animate-fade-in delay-1">
-          <div class="stat-icon">📤</div>
-          <h3>Issued Books</h3>
-          <div class="stat big" id="issuedBooks">0</div>
+        <article
+          class="card glass stat-card stat-orange animate-fade-in delay-1"
+        >
+          <div class="stat-bg-icon">📤</div>
+          <div class="stat-content">
+            <div class="stat-icon">📤</div>
+            <h3>Issued Books</h3>
+            <div class="stat big" id="issuedBooks">0</div>
+            <div class="stat-label">Currently Out</div>
+          </div>
         </article>
 
-        <article class="card glass stat-card animate-fade-in delay-2">
-          <div class="stat-icon">✅</div>
-          <h3>Available</h3>
-          <div class="stat big" id="availableBooks">0</div>
+        <article
+          class="card glass stat-card stat-green animate-fade-in delay-2"
+        >
+          <div class="stat-bg-icon">✅</div>
+          <div class="stat-content">
+            <div class="stat-icon">✅</div>
+            <h3>Available</h3>
+            <div class="stat big" id="availableBooks">0</div>
+            <div class="stat-label">Ready to Issue</div>
+          </div>
         </article>
       </section>
 
-      <section class="card glass animate-fade-in delay-3">
-        <div class="row between">
-          <h2 class="section-title">Quick Actions</h2>
-          <div>
-            <a class="btn" href="books.html">Manage Books</a>
-          </div>
+      <!-- Quick Actions -->
+      <section class="card glass quick-actions animate-fade-in delay-3">
+        <h2 class="section-title">
+          <span class="section-icon">⚡</span> Quick Actions
+        </h2>
+        <div class="action-grid">
+          <a class="action-card" href="books.html">
+            <div class="action-icon">📖</div>
+            <span>Manage Books</span>
+          </a>
+          <a class="action-card" href="books.html">
+            <div class="action-icon">📤</div>
+            <span>Issue Book</span>
+          </a>
+          <a class="action-card" href="books.html">
+            <div class="action-icon">📥</div>
+            <span>Return Book</span>
+          </a>
+          <a class="action-card" href="books.html">
+            <div class="action-icon">➕</div>
+            <span>Add New Book</span>
+          </a>
         </div>
+      </section>
 
-        <p class="muted">
-          All data is stored locally in your browser (LocalStorage). Works
-          offline.
-        </p>
+      <!-- Info Cards Row -->
+      <section class="info-row animate-fade-in delay-4">
+        <div class="card glass info-card">
+          <div class="info-icon">💾</div>
+          <h3>Local Storage</h3>
+          <p>All data is stored locally in your browser. Works offline!</p>
+        </div>
+        <div class="card glass info-card">
+          <div class="info-icon">🔒</div>
+          <h3>Secure Access</h3>
+          <p>Role-based permissions for admins and users.</p>
+        </div>
+        <div class="card glass info-card">
+          <div class="info-icon">🎨</div>
+          <h3>Modern Design</h3>
+          <p>Beautiful glassmorphism UI with animations.</p>
+        </div>
       </section>
     </main>
     <footer class="site-footer muted">library management system</footer>
