@@ -22,6 +22,7 @@
           Simple, modern library management — demo only
         </p>
 
+        <!-- Login Form -->
         <form id="loginForm" class="form">
           <div class="field">
             <label>Username</label>
@@ -53,11 +54,58 @@
           </button>
         </form>
 
-        <div class="tip muted small">
-          Welcome back! Please sign in to continue.
+        <!-- Register Form (hidden by default) -->
+        <form id="registerForm" class="form" style="display: none">
+          <div class="field">
+            <label>Choose Username</label>
+            <input
+              id="regUsername"
+              type="text"
+              placeholder="Create a username"
+            />
+          </div>
+          <div class="field">
+            <label>Choose Password</label>
+            <input
+              id="regPassword"
+              type="password"
+              placeholder="Create a password"
+            />
+          </div>
+          <div class="field">
+            <label>Confirm Password</label>
+            <input
+              id="regConfirm"
+              type="password"
+              placeholder="Confirm password"
+            />
+          </div>
+          <div
+            id="registerError"
+            class="error"
+            aria-live="polite"
+            style="display: none"
+          ></div>
+          <div
+            id="registerSuccess"
+            class="success"
+            aria-live="polite"
+            style="display: none"
+          ></div>
+
+          <button id="registerBtn" class="btn btn-primary btn-animate">
+            Create Account
+          </button>
+        </form>
+
+        <div class="auth-toggle">
+          <span id="toggleText" class="muted small"
+            >Don't have an account?</span
+          >
+          <button id="toggleAuth" class="btn-text">Sign Up</button>
         </div>
       </div>
-      <footer class="attribution">Built for college demo — no backend</footer>
+      <footer class="attribution">Built for college demo</footer>
     </main>
   </body>
 </html>

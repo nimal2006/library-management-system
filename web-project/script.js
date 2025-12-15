@@ -8,12 +8,37 @@ const LS_BOOKS = "elib_books";
 const LS_USER = "elib_user";
 const LS_ROLE = "elib_role"; // 'admin' or 'user'
 const LS_THEME = "elib_theme";
+const LS_CUSTOM_USERS = "elib_custom_users"; // Custom registered users
 
-// Credentials: admin/admin123 (full access), user/user123 (limited)
-const CREDENTIALS = {
-  admin: { password: "admin123", role: "admin" },
-  user: { password: "user123", role: "user" },
-};
+// Built-in admin account (full access)
+const ADMIN_ACCOUNT = { password: "admin123", role: "admin" };
+
+// Load custom users from localStorage
+function loadCustomUsers() {
+  const raw = localStorage.getItem(LS_CUSTOM_USERS);
+  if (!raw) return {};
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return {};
+  }
+}
+
+// Save custom users to localStorage
+function saveCustomUsers(users) {
+  localStorage.setItem(LS_CUSTOM_USERS, JSON.stringify(users));
+}
+
+// Register a new user
+function registerUser(username, password) {
+  const users = loadCustomUsers();
+  if (users[username] || username === "admin") {
+    return { success: false, message: "Username already exists" };
+  }
+  users[username] = { password: password, role: "user" };
+  saveCustomUsers(users);
+  return { success: true, message: "Account created successfully!" };
+}
 
 // Sample seed data
 const SAMPLE_BOOKS = [
@@ -110,14 +135,97 @@ function toggleTheme() {
 
 /* ------------------- Login Page ------------------- */
 function initLoginPage() {
-  const form = document.getElementById("loginForm");
-  if (!form) return;
-  form.addEventListener("submit", (e) => {
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
+  const toggleBtn = document.getElementById("toggleAuth");
+  const toggleText = document.getElementById("toggleText");
+
+  if (!loginForm) return;
+
+  // Login form submit
+  loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     doLogin();
   });
+
+  // Register form submit
+  if (registerForm) {
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      doRegister();
+    });
+  }
+
+  // Toggle between login and register
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const isLoginVisible = loginForm.style.display !== "none";
+      if (isLoginVisible) {
+        loginForm.style.display = "none";
+        registerForm.style.display = "block";
+        toggleBtn.textContent = "Sign In";
+        toggleText.textContent = "Already have an account?";
+      } else {
+        loginForm.style.display = "block";
+        registerForm.style.display = "none";
+        toggleBtn.textContent = "Sign Up";
+        toggleText.textContent = "Don't have an account?";
+      }
+      // Clear errors
+      document.getElementById("loginError").style.display = "none";
+      document.getElementById("registerError").style.display = "none";
+      document.getElementById("registerSuccess").style.display = "none";
+    });
+  }
+
   document.getElementById("username").focus();
 }
+
+function doRegister() {
+  const u = document.getElementById("regUsername").value.trim().toLowerCase();
+  const p = document.getElementById("regPassword").value.trim();
+  const c = document.getElementById("regConfirm").value.trim();
+  const err = document.getElementById("registerError");
+  const success = document.getElementById("registerSuccess");
+
+  err.style.display = "none";
+  success.style.display = "none";
+
+  if (!u || !p || !c) {
+    err.style.display = "block";
+    err.textContent = "Please fill in all fields";
+    return;
+  }
+  if (u.length < 3) {
+    err.style.display = "block";
+    err.textContent = "Username must be at least 3 characters";
+    return;
+  }
+  if (p.length < 4) {
+    err.style.display = "block";
+    err.textContent = "Password must be at least 4 characters";
+    return;
+  }
+  if (p !== c) {
+    err.style.display = "block";
+    err.textContent = "Passwords do not match";
+    return;
+  }
+
+  const result = registerUser(u, p);
+  if (result.success) {
+    success.style.display = "block";
+    success.textContent = result.message + " You can now sign in.";
+    // Clear form
+    document.getElementById("regUsername").value = "";
+    document.getElementById("regPassword").value = "";
+    document.getElementById("regConfirm").value = "";
+  } else {
+    err.style.display = "block";
+    err.textContent = result.message;
+  }
+}
+
 function doLogin() {
   const u = document.getElementById("username").value.trim().toLowerCase();
   const p = document.getElementById("password").value.trim();
@@ -128,21 +236,32 @@ function doLogin() {
     err.textContent = "Enter username and password";
     return;
   }
-  // Check credentials for both admin and user
-  const account = CREDENTIALS[u];
+  // Check admin account first
+  if (u === "admin" && p === ADMIN_ACCOUNT.password) {
+    setUser(u, "admin");
+    loginSuccess();
+    return;
+  }
+  
+  // Check custom registered users
+  const customUsers = loadCustomUsers();
+  const account = customUsers[u];
   if (account && account.password === p) {
-    setUser(u, account.role); // redirect
-    // small success animation
-    const btn = document.getElementById("loginBtn");
-    btn.disabled = true;
-    btn.textContent = "Logging in...";
-    setTimeout(() => {
-      location.href = "dashboard.html";
-    }, 600);
+    setUser(u, account.role);
+    loginSuccess();
   } else {
     err.style.display = "block";
     err.textContent = "Invalid username or password";
   }
+}
+
+function loginSuccess() {
+  const btn = document.getElementById("loginBtn");
+  btn.disabled = true;
+  btn.textContent = "Logging in...";
+  setTimeout(() => {
+    location.href = "dashboard.html";
+  }, 600);
 }
 
 /* ------------------- Auth helpers ------------------- */

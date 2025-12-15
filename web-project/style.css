@@ -326,6 +326,40 @@ body {
   font-weight: 600;
 }
 
+.success {
+  color: #43cea2;
+  margin: 10px 0;
+  font-weight: 600;
+  background: rgba(67, 206, 162, 0.1);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(67, 206, 162, 0.3);
+}
+
+/* Auth toggle (Login/Register switch) */
+.auth-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: #ee0979;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 4px 8px;
+  transition: color 0.3s, transform 0.2s;
+}
+.btn-text:hover {
+  color: #ff6a00;
+  transform: scale(1.05);
+}
+
 .attribution {
   margin-top: 18px;
   color: var(--muted);
