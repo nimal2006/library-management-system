@@ -383,8 +383,13 @@ body {
   box-shadow: 0 2px 12px rgba(67, 206, 162, 0.4);
 }
 @keyframes badgePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .icon-btn {
