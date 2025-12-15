@@ -1,12 +1,19 @@
 /* script.js — simple frontend-only library management
    - Stores books in localStorage under key 'elib_books'
-   - Simple login (admin / 1234) stored in session via localStorage 'elib_user'
+   - Supports admin and user login with different permissions
    - Theme saved at 'elib_theme' ('light'|'dark')
 */
 
 const LS_BOOKS = "elib_books";
 const LS_USER = "elib_user";
+const LS_ROLE = "elib_role"; // 'admin' or 'user'
 const LS_THEME = "elib_theme";
+
+// Credentials: admin/admin123 (full access), user/user123 (limited)
+const CREDENTIALS = {
+  admin: { password: "admin123", role: "admin" },
+  user: { password: "user123", role: "user" },
+};
 
 // Sample seed data
 const SAMPLE_BOOKS = [
@@ -68,9 +75,20 @@ function saveBooks(list) {
 function getUser() {
   return localStorage.getItem(LS_USER);
 }
-function setUser(u) {
-  if (u) localStorage.setItem(LS_USER, u);
-  else localStorage.removeItem(LS_USER);
+function getRole() {
+  return localStorage.getItem(LS_ROLE) || "user";
+}
+function setUser(u, role) {
+  if (u) {
+    localStorage.setItem(LS_USER, u);
+    localStorage.setItem(LS_ROLE, role || "user");
+  } else {
+    localStorage.removeItem(LS_USER);
+    localStorage.removeItem(LS_ROLE);
+  }
+}
+function isAdmin() {
+  return getRole() === "admin";
 }
 
 /* ------------------- Theme ------------------- */
@@ -101,7 +119,7 @@ function initLoginPage() {
   document.getElementById("username").focus();
 }
 function doLogin() {
-  const u = document.getElementById("username").value.trim();
+  const u = document.getElementById("username").value.trim().toLowerCase();
   const p = document.getElementById("password").value.trim();
   const err = document.getElementById("loginError");
   // simple validation
@@ -110,8 +128,10 @@ function doLogin() {
     err.textContent = "Enter username and password";
     return;
   }
-  if (u === "admin" && p === "1234") {
-    setUser("admin"); // redirect
+  // Check credentials for both admin and user
+  const account = CREDENTIALS[u];
+  if (account && account.password === p) {
+    setUser(u, account.role); // redirect
     // small success animation
     const btn = document.getElementById("loginBtn");
     btn.disabled = true;
@@ -121,7 +141,7 @@ function doLogin() {
     }, 600);
   } else {
     err.style.display = "block";
-    err.textContent = "Invalid credentials";
+    err.textContent = "Invalid username or password";
   }
 }
 
@@ -149,6 +169,21 @@ function renderDashboard() {
   animateCount("totalBooks", total);
   animateCount("issuedBooks", issued);
   animateCount("availableBooks", available);
+  // Update user role display
+  updateUserRoleDisplay();
+}
+
+function updateUserRoleDisplay() {
+  const roleEl = document.getElementById("userRole");
+  const userEl = document.getElementById("userName");
+  if (roleEl) {
+    const role = getRole();
+    roleEl.textContent = role.charAt(0).toUpperCase() + role.slice(1);
+    roleEl.className = "role-badge role-" + role;
+  }
+  if (userEl) {
+    userEl.textContent = getUser() || "Guest";
+  }
 }
 
 function animateCount(id, to) {
@@ -171,10 +206,16 @@ function easeOutCubic(t) {
 /* ------------------- Books Page ------------------- */
 function initBooksPage() {
   renderBooksTable();
-  document
-    .getElementById("addBookBtn")
-    .addEventListener("click", openAddBookModal);
+  const addBtn = document.getElementById("addBookBtn");
+  // Only admin can add books
+  if (!isAdmin()) {
+    addBtn.style.display = "none";
+  } else {
+    addBtn.addEventListener("click", openAddBookModal);
+  }
   document.getElementById("modalClose").addEventListener("click", closeModal);
+  // Update user role display if element exists
+  updateUserRoleDisplay();
 }
 
 function renderBooksTable() {
